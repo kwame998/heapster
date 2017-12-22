@@ -33,3 +33,20 @@ Using Heapster to monitor an OpenShift cluster requires some additional changes 
 ## Community
 
 Contributions, questions, and comments are all welcomed and encouraged! Developers hang out on [Slack](https://kubernetes.slack.com) in the #sig-instrumentation channel (get an invitation [here](http://slack.kubernetes.io/)). We also have the [kubernetes-dev Google Groups mailing list](https://groups.google.com/forum/#!forum/kubernetes-dev). If you are posting to the list please prefix your subject with "heapster: ".
+
+
+git clone https://github.com/kubernetes/heapster
+
+cd heapster
+
+kubectl create -f deploy/kube-config/influxdb/
+
+kubectl create -f deploy/kube-config/rbac/heapster-rbac.yaml
+
+稍等一会，就可以通过kubectl cluster-info看到这些服务：
+$ kubectl cluster-info
+
+kubectl proxy --address='0.0.0.0' --port=8080 --accept-hosts='^*$' &
+
+
+http://<master-ip>:8080/api/v1/proxy/namespaces/kube-system/services/monitoring-grafana
